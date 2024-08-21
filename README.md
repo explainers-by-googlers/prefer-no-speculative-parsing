@@ -20,8 +20,6 @@ The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to r
   - [Non-goals](#non-goals)
   - [User research](#user-research)
   - [Specification plan](#specification-plan)
-    - [Header parsing](#header-parsing)
-    - [Managing the active speculative HTML parser](#managing-the-active-speculative-html-parser)
   - [Considered alternatives](#considered-alternatives)
     - [A `<meta>` tag version](#a-meta-tag-version)
     - [Use of `Content-Security-Policy` meta tag as a work-around](#use-of-content-security-policy-meta-tag-as-a-work-around)
@@ -79,13 +77,9 @@ resource fetches by reducing the time spent towards speculative parsing.
 
 The specification for this feature in itself consists of two parts.
 
-### Header parsing
+One part is header parsing, which relies on the [Structured Headers](https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html) specification to do the work. The other is altering behavior of the [active HTML speculative parser](https://html.spec.whatwg.org/multipage/parsing.html#active-speculative-html-parser), which would be done by modifying the HTML Standard's [Speculative HTML parsing](https://html.spec.whatwg.org/multipage/parsing.html#speculative-html-parsing).
 
-One part is header parsing, which relies on the [Structured Headers](https://httpwg.org/http-extensions/draft-ietf-httpbis-header-structure.html) specification to do the work.
-
-### Managing the active speculative HTML parser
-
-The other is setting the [active HTML speculative parser](https://html.spec.whatwg.org/multipage/parsing.html#active-speculative-html-parser) to `null`, which would be done by modifying the HTML Standard's [Speculative HTML parsing](https://html.spec.whatwg.org/multipage/parsing.html#speculative-html-parsing).
+Please see the associated [spec proposal](https://explainers-by-googlers.github.io/prefer-no-speculative-parsing) for more information.
 
 ## Considered alternatives
 
