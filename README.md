@@ -1,6 +1,6 @@
 # `Prefer-No-Speculative-Parsing` explainer
 
-The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to request the user agent to not use the default speculative behavior.
+The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to request the user agent to not use the default speculative parsing behavior.
 
 ## Participate
 - https://github.com/explainers-by-googlers/prefer-no-speculative-parsing/issues
@@ -23,8 +23,8 @@ The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to r
     - [Header parsing](#header-parsing)
     - [Managing the active speculative HTML parser](#managing-the-active-speculative-html-parser)
   - [Considered alternatives](#considered-alternatives)
-    - [\[A `<meta>` tag version\]](#a-meta-tag-version)
-    - [\[Use of `Content-Security-Policy` meta tag as a work-around\]](#use-of-content-security-policy-meta-tag-as-a-work-around)
+    - [A `<meta>` tag version](#a-meta-tag-version)
+    - [Use of `Content-Security-Policy` meta tag as a work-around](#use-of-content-security-policy-meta-tag-as-a-work-around)
   - [References \& acknowledgements](#references--acknowledgements)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -89,14 +89,11 @@ The other is setting the [active HTML speculative parser](https://html.spec.what
 
 ## Considered alternatives
 
-[This should include as many alternatives as you can,
-from high level architectural decisions down to alternative naming choices.]
-
-### [A `<meta>` tag version]
+### A `<meta>` tag version
 
 While a `meta` header is in some cases easier for web developers to add to their page than a header, it would make the behavior of such a directive unpredictable. It will also add further complexity in determining how such a directive would work given the placement and timing of itself against resources specified in the HTML. This option has been considered and rejected.
 
-### [Use of `Content-Security-Policy` meta tag as a work-around]
+### Use of `Content-Security-Policy` meta tag as a work-around
 
 Some user agents may choose to disable active speculative HTML parser partly or completely on encountering a CSP meta tag. A more direct hint from the page is a more precise signal vs. overloading of the CSP header for implicit disabling of active speculative HTML parser.
 
