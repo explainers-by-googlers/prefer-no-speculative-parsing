@@ -1,12 +1,12 @@
 <pre class='metadata'>
-Title: The TODO API
-Shortname: todo
+Title: Prefer-No-Speculative-Parsing HTTP header
+Shortname: Prefer-No-Speculative-Parsing
 Level: None
 Status: w3c/UD
-Repository: explainers-by-googlers/todo-your-repo-name
-URL: https://explainers-by-googlers.github.io/todo-your-repo-name
-Editor: TODO: Your Name, Google https://google.com, TODO@google.com
-Abstract: TODO: A short description of your spec, one or two sentences.
+Repository: explainers-by-googlers/prefer-no-speculative-parsing
+URL: https://explainers-by-googlers.github.io/prefer-no-speculative-parsing
+Editor: Alex N. Jose, Google https://google.com, alexnj@chromium.org
+Abstract: The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to request the user agent to not use the default speculative behavior.
 Markup Shorthands: markdown yes, css no
 Complain About: accidental-2119 yes, missing-example-ids yes
 Assume Explicit For: yes
@@ -17,12 +17,16 @@ Include MDN Panels: if possible
 Include Can I Use Panels: yes
 </pre>
 
-Introduction {#intro}
-=====================
+## Prefer-No-Speculative-Parsing
 
-For now, see the [explainer]([REPOSITORYURL]).
+A document can request that the default speculative parsing behavior is not used, by using the Prefer-No-Speculative-Parsing HTTP header. This header is a HTTP structured field whose value must be Boolean.
 
-See [https://garykac.github.io/procspec/](https://garykac.github.io/procspec/),
-[https://dlaliberte.github.io/bikeshed-intro/index.html](https://dlaliberte.github.io/bikeshed-intro/index.html),
-and [https://speced.github.io/bikeshed/](https://speced.github.io/bikeshed/) to get started on your
-specificaton.
+Per the processing model in the Speculative HTML parsing, values that are not the structured header boolean true value (i.e., `?1`) will be ignored.
+
+The consequence of using this header is that the resulting Document's active speculative HTML parser may be set to `null`. This header indicates only a preference from the Document on how the speculative HTML parser may behave, which the user agent may choose to ignore. In terms of observable effects, this means that any fetches originating from speculative HTML parser may be avoided and any time spent in speculative parsing may be reduced. Resources that were being fetched as part of a speculative fetch, will then be fetched as part of the normal document parsing. Behind the scenes, this preference can allow user agents to skip the time spent in speculative parsing, and deallocate any implementation specific resources corresponding to speculative parsing for additional efficiency.
+
+Example usage:
+
+```http
+Prefer-No-Speculative-Parsing: ?1
+```
