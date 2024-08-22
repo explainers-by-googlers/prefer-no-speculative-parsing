@@ -37,7 +37,7 @@ The consequence of using this header is that the resulting Document's [active sp
 
 1. Modify <a spec=HTML>create and initialize a Document object</a> under [[HTML#shared-document-creation-infrastructure]] section by inserting the following steps between the current step 9 and 10:
 
-    1. Let |preferNoSpeculativeHTMLParsingHeader| be the result of [get a structured field value](https://fetch.spec.whatwg.org/#concept-header-list-get-structured-header) given `Prefer-No-Speculative-Parsing` from <var ignore>navigationParams</var>'s [=response=]'s [=response/header list=].
+    1. Let |preferNoSpeculativeHTMLParsingHeader| be the result of [=header list/get a structured field value=] given `Prefer-No-Speculative-Parsing` from <var ignore>navigationParams</var>'s [=response=]'s [=response/header list=].
 
     1. Let |preferNoSpeculativeHTMLParsing| be `true` if |preferNoSpeculativeHTMLParsingHeader| is not `null` and |preferNoSpeculativeHTMLParsingHeader|[0] is the [boolean](https://httpwg.org/specs/rfc8941.html#boolean) `true`; otherwise `false`.
 
