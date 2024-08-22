@@ -1,12 +1,12 @@
 <pre class='metadata'>
-Title: The TODO API
-Shortname: todo
+Title: Prefer-No-Speculative-Parsing
+Shortname: Prefer-No-Speculative-Parsing
 Level: None
 Status: w3c/UD
-Repository: explainers-by-googlers/todo-your-repo-name
-URL: https://explainers-by-googlers.github.io/todo-your-repo-name
-Editor: TODO: Your Name, Google https://google.com, TODO@google.com
-Abstract: TODO: A short description of your spec, one or two sentences.
+Repository: explainers-by-googlers/prefer-no-speculative-parsing
+URL: https://explainers-by-googlers.github.io/prefer-no-speculative-parsing
+Editor: Alex N. Jose, Google LLC https://google.com, alexnj@google.com
+Abstract: The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to request the user agent to not use the default speculative behavior.
 Markup Shorthands: markdown yes, css no
 Complain About: accidental-2119 yes, missing-example-ids yes
 Assume Explicit For: yes
@@ -17,12 +17,28 @@ Include MDN Panels: if possible
 Include Can I Use Panels: yes
 </pre>
 
-Introduction {#intro}
-=====================
+# Introduction # {#introduction}
 
-For now, see the [explainer]([REPOSITORYURL]).
+A document can request the user agent that the default speculative parsing behavior is not used, by using the `Prefer-No-Speculative-Parsing` HTTP header. This header is a HTTP structured field whose value must be Boolean.
 
-See [https://garykac.github.io/procspec/](https://garykac.github.io/procspec/),
-[https://dlaliberte.github.io/bikeshed-intro/index.html](https://dlaliberte.github.io/bikeshed-intro/index.html),
-and [https://speced.github.io/bikeshed/](https://speced.github.io/bikeshed/) to get started on your
-specificaton.
+The consequence of using this header is that the resulting Document's [active speculative HTML parser](https://html.spec.whatwg.org/multipage/parsing.html#active-speculative-html-parser) might be set to `null`. This header indicates only a preference from the Document on how the speculative HTML parser may behave, which the user agent can choose to ignore. In terms of observable effects, this means that any fetches originating from speculative HTML parser may be avoided and any time spent in speculative parsing may be reduced. Resources that were being fetched as part of a speculative fetch, will then be fetched as part of the normal document parsing. Behind the scenes, this preference can allow user agents to skip the time spent in speculative parsing, and deallocate any implementation specific resources corresponding to speculative parsing for additional efficiency.
+
+# Modifications to HTML's Speculative HTML parsing # {#modifications-html-speculative-parsing}
+
+1. Modify [[HTML#speculative-html-parsing]] to add the following line:
+
+    - Each {{Document}} has a <dfn for="Document">prefer no speculative HTML parsing</dfn> boolean. It is initially `false`.
+
+1. Rewrite step 1 of [start the speculative HTML parser](https://html.spec.whatwg.org/#start-the-speculative-html-parser) to:
+
+    1. Optionally, return. The user agent may especially wish to return if <var ignore>parser</var>'s {{Document}}'s [=Document/prefer no speculative HTML parsing=] is `true`, as that indicates the {{Document}} prefers to opt out of speculative HTML parsing.
+
+# Modifications to Document creation # {#modifications-document-creation}
+
+1. Modify <a spec=HTML>create and initialize a Document object</a> under [[HTML#shared-document-creation-infrastructure]] section by inserting the following steps between the current step 9 and 10:
+
+    1. Let |preferNoSpeculativeHTMLParsingHeader| be the result of [=header list/get a structured field value=] given `Prefer-No-Speculative-Parsing` from <var ignore>navigationParams</var>'s [=response=]'s [=response/header list=].
+
+    1. Let |preferNoSpeculativeHTMLParsing| be `true` if |preferNoSpeculativeHTMLParsingHeader| is not `null` and |preferNoSpeculativeHTMLParsingHeader|[0] is the [boolean](https://httpwg.org/specs/rfc8941.html#boolean) `true`; otherwise `false`.
+
+1. Modify the current step 10 to set <var ignore>document</var>'s [=Document/prefer no speculative HTML parsing=] to |preferNoSpeculativeHTMLParsing|.
