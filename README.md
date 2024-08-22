@@ -66,7 +66,7 @@ The presence of the header, with the structured headers boolean "true" value `?1
 
 ## User research
 
-An Origin Trial was conducted in Chrome from M125 to M130 that allowed participants to disable the default speculative prefetch behavior of the user agent. More information about the Origin Trial can be found on the [Chrome Platform Status page for the Skip Preload Scanning Feature](https://chromestatus.com/feature/5190976638550016) and the [explainer document](https://docs.google.com/document/d/1wiaTL5TeONTZamycMVMjo76nMcbhHNYznQy7I_zCVRY/edit).
+An Origin Trial was conducted in Chrome from 125 to 130 that allowed participants to disable the default speculative prefetch behavior of the user agent. More information about the Origin Trial can be found on the [Chrome Platform Status page for the Skip Preload Scanning Feature](https://chromestatus.com/feature/5190976638550016) and the [explainer document](https://docs.google.com/document/d/1wiaTL5TeONTZamycMVMjo76nMcbhHNYznQy7I_zCVRY/edit).
 
 Additional comments and usecases from the community were received on the [tracker issue](https://issues.chromium.org/issues/330802493) that influenced the design of this header.
 
@@ -85,7 +85,7 @@ Please see the associated [spec proposal](https://explainers-by-googlers.github.
 
 ### A `<meta>` tag version
 
-While a `meta` header is in some cases easier for web developers to add to their page than a header, it would make the behavior of such a directive unpredictable. It will also add further complexity in determining how such a directive would work given the placement and timing of itself against resources specified in the HTML. This option has been considered and rejected.
+While a `meta` element is in some cases easier for web developers to add to their page than a header, it would make the behavior of such a directive unpredictable. It will also add further complexity in determining how such a directive would work given the placement and timing of itself against resources specified in the HTML. This option has been considered and rejected.
 
 ### Use of `Content-Security-Policy` meta tag as a work-around
 

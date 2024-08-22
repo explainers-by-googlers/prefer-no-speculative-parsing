@@ -19,17 +19,15 @@ Include Can I Use Panels: yes
 
 # Introduction # {#introduction}
 
-*This section is non-normative.*
-
 A document can request the user agent that the default speculative parsing behavior is not used, by using the `Prefer-No-Speculative-Parsing` HTTP header. This header is a HTTP structured field whose value must be Boolean.
 
-The consequence of using this header is that the resulting Document's [active speculative HTML parser](https://html.spec.whatwg.org/multipage/parsing.html#active-speculative-html-parser) may be set to `null`. This header indicates only a preference from the Document on how the speculative HTML parser may behave, which the user agent may choose to ignore. In terms of observable effects, this means that any fetches originating from speculative HTML parser may be avoided and any time spent in speculative parsing may be reduced. Resources that were being fetched as part of a speculative fetch, will then be fetched as part of the normal document parsing. Behind the scenes, this preference can allow user agents to skip the time spent in speculative parsing, and deallocate any implementation specific resources corresponding to speculative parsing for additional efficiency.
+The consequence of using this header is that the resulting Document's [active speculative HTML parser](https://html.spec.whatwg.org/multipage/parsing.html#active-speculative-html-parser) might be set to `null`. This header indicates only a preference from the Document on how the speculative HTML parser may behave, which the user agent can choose to ignore. In terms of observable effects, this means that any fetches originating from speculative HTML parser may be avoided and any time spent in speculative parsing may be reduced. Resources that were being fetched as part of a speculative fetch, will then be fetched as part of the normal document parsing. Behind the scenes, this preference can allow user agents to skip the time spent in speculative parsing, and deallocate any implementation specific resources corresponding to speculative parsing for additional efficiency.
 
 # Modifications to HTML's Speculative HTML parsing # {#modifications-html-speculative-parsing}
 
 1. Modify [[HTML#speculative-html-parsing]] to add the following line:
 
-    1. Each {{Document}} has a <dfn for="Document">prefer no speculative HTML parsing</dfn> boolean. It is initially `false`.
+    - Each {{Document}} has a <dfn for="Document">prefer no speculative HTML parsing</dfn> boolean. It is initially `false`.
 
 1. Rewrite step 1 of [start the speculative HTML parser](https://html.spec.whatwg.org/#start-the-speculative-html-parser) to:
 
@@ -37,10 +35,10 @@ The consequence of using this header is that the resulting Document's [active sp
 
 # Modifications to Document creation # {#modifications-document-creation}
 
-1. Modify [create and initialize a Document object](https://html.spec.whatwg.org/#initialise-the-document-object) under [[HTML#shared-document-creation-infrastructure]] section by inserting the following steps between the current step 9 and 10:
+1. Modify <a spec=HTML>create and initialize a Document object</a> under [[HTML#shared-document-creation-infrastructure]] section by inserting the following steps between the current step 9 and 10:
 
-    1. Let |preferNoSpeculativeHTMLParsingHeader| be the result of [getting a structured field value](https://fetch.spec.whatwg.org/#concept-header-list-get-structured-header) given `Prefer-No-Speculative-Parsing` from <var ignore>navigationParams</var>'s [response](https://html.spec.whatwg.org/#navigation-params-response)'s [header list](https://fetch.spec.whatwg.org/#concept-response-header-list).
+    1. Let |preferNoSpeculativeHTMLParsingHeader| be the result of [get a structured field value](https://fetch.spec.whatwg.org/#concept-header-list-get-structured-header) given `Prefer-No-Speculative-Parsing` from <var ignore>navigationParams</var>'s [=response=]'s [=response/header list=].
 
-    1. Let |preferNoSpeculativeHTMLParsing| be `true` if |preferNoSpeculativeHTMLParsingHeader| is not `null` and |preferNoSpeculativeHTMLParsingHeader| is the [boolean](https://httpwg.org/specs/rfc8941.html#boolean) `true`; otherwise `false`.
+    1. Let |preferNoSpeculativeHTMLParsing| be `true` if |preferNoSpeculativeHTMLParsingHeader| is not `null` and |preferNoSpeculativeHTMLParsingHeader|[0] is the [boolean](https://httpwg.org/specs/rfc8941.html#boolean) `true`; otherwise `false`.
 
 1. Modify the current step 10 to set <var ignore>document</var>'s [=Document/prefer no speculative HTML parsing=] to |preferNoSpeculativeHTMLParsing|.
