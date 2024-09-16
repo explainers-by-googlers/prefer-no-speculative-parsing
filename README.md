@@ -1,7 +1,7 @@
 # `Prefer-No-Speculative-Parsing` explainer
 
 > [!IMPORTANT]
-> This proposal has been revised into a [configuration point](https://wicg.github.io/document-policy#configuration-point) in [Document Policy](https://wicg.github.io/document-policy/) header named `expect-no-embedded-resources`. More information can be found on the [expect-no-embedded-resources](https://github.com/explainers-by-googlers/expect-no-embedded-resources) repository. This repository has been archived.
+> This proposal has been revised into a [configuration point](https://wicg.github.io/document-policy#configuration-point) in [Document Policy](https://wicg.github.io/document-policy/) header named `expect-no-embedded-resources`. More information can be found on the [expect-no-linked-resources](https://github.com/explainers-by-googlers/expect-no-linked-resources) repository. This repository has been archived.
 
 The `Prefer-No-Speculative-Parsing` HTTP response header allows a developer to request the user agent to not use the default speculative parsing behavior.
 
